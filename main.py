@@ -113,7 +113,6 @@ def fnc(ghyt):
     ax2.set_ylabel("v, м/с", fontsize=14)
     ax1.set_xlabel("l, м", fontsize=14)
     ax1.set_ylabel("h, м", fontsize=14)
-
     ax2.plot(sol.t, sol.y[1])
     plt.show()
 
