@@ -19,12 +19,12 @@ root.rowconfigure(list(range(len(s))), minsize=0, weight=1)
 root.columnconfigure([0, 1, 2], minsize=0, weight=1)
 
 
-#@numba.jit(nopython=False)
+# @numba.jit(nopython=False)
 def fnc(ghyt):
-    i, l, m, bf, p, cf, sp, af, l2, t=ghyt #получение данных
-    f = i * l * bf * p #сила ампера
-    v0 = (l2 * 2 * (f / m)) ** 0.5 # начальная скорость
-    print(v0,f,f/p,p)
+    i, l, m, bf, p, cf, sp, af, l2, t = ghyt  # получение данных
+    f = i * l * bf * p  # сила ампера
+    v0 = (l2 * 2 * (f / m)) ** 0.5  # начальная скорость
+    print(v0, f, f / p, p)
     params = {'legend.fontsize': 14, 'figure.figsize': (10, 7), 'axes.labelsize': 14,
               'axes.titlesize': 14, 'xtick.labelsize': 14, 'ytick.labelsize': 14}
     pylab.rcParams.update(params)
@@ -35,14 +35,13 @@ def fnc(ghyt):
     mu = 398600.4415e9
     Re = 6371000.0
     params = namedtuple("params", "CD CL mass")
-    params.mass = m#4000.0
-    params.CD = cf#0.02  # Коэффицент лобового сопротивления
+    params.mass = m  # 4000.0
+    params.CD = cf  # 0.02  # Коэффицент лобового сопротивления
     params.CL = 0  # Коэффицент подъёмной силы
-    params.Sm = sp#1  # Площадь миделя
+    params.Sm = sp  # 1  # Площадь миделя
     h0 = 0  # Начальная высота [м]
-    #v0 = 1000  # Начальная скорость [м/c]
-    theta0 = radians(af)#1.22173  # начальный угол наклона траектории [радиан]
-
+    # v0 = 1000  # Начальная скорость [м/c]
+    theta0 = radians(af)  # 1.22173  # начальный угол наклона траектории [радиан]
 
     def rho(h):
         x = h / 50.0 - 1
@@ -75,8 +74,8 @@ def fnc(ghyt):
                               events=event_h_eq_0, rtol=1e-8)
     fig3, ax3 = plt.subplots(figsize=(6, 6))
 
-    af=sol.y[3]
-    bf=sol.y[0]
+    af = sol.y[3]
+    bf = sol.y[0]
     originX = originY = 0
     theta1 = np.arange(0, 360, 0.001)
     ax3.plot(np.cos(theta1 * np.pi / 180) * (6371000.0) + originX, np.sin(theta1 * np.pi / 180) * (6371000.0) + originY,
@@ -137,12 +136,8 @@ def raschot():
     a = float(bx[7].get())
     l2 = float(bx[8].get())
     t = float(bx[9].get())
-    fnc((i,l,m,b,p,c,sp,a,l2,t))
+    fnc((i, l, m, b, p, c, sp, a, l2, t))
     print(t)
-
-
-
-
 
 
 tx = [Label(master=root, text=s[i], foreground="#000", font="16") for i in range(len(s))]
