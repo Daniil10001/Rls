@@ -1,14 +1,13 @@
 ﻿global tx, bx
-from tkinter import *
-from math import *
-from tkinter import messagebox as mb
-import matplotlib.pyplot as plt
 from collections import namedtuple
-import scipy
-import numpy as np
-import matplotlib as mpl
-from scipy import integrate
+from math import *
+from tkinter import *
+from tkinter import messagebox as mb
+
 import matplotlib.pylab as pylab
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import integrate
 
 root = Tk()
 root.title("GUI на Python")
@@ -80,34 +79,41 @@ def fnc(ghyt):
     bf=sol.y[0]
     originX = originY = 0
     theta1 = np.arange(0, 360, 0.001)
-    ax3.plot(np.cos(theta1 * np.pi / 180) * (6371000.0) + originX, np.sin(theta1 * np.pi / 180) * (6371000.0) + originY,'o', ms=1)
-    theta = (af%6371000.0)*360/6371000.0
+    ax3.plot(np.cos(theta1 * np.pi / 180) * (6371000.0) + originX, np.sin(theta1 * np.pi / 180) * (6371000.0) + originY,
+             'o', ms=1)
+    theta = (af % 6371000.0) * 360 / 6371000.0
     tenDegreePtsX = np.array([np.cos(theta[i] * np.pi / 180) * (bf[i]) + originX for i in range(len(bf))])
     tenDegreePtsY = np.array([np.sin(theta[i] * np.pi / 180) * (bf[i]) + originY for i in range(len(bf))])
     ax3.plot(tenDegreePtsX, tenDegreePtsY, ms=1)
     ax3.set_title('Траектория полета')
-    mx=max(max(tenDegreePtsX),max(tenDegreePtsY))
-    ax3.set_xlim(-mx*1.2,mx*1.2)
-    ax3.set_ylim(-mx*1.2,mx*1.2)
+    mx = max(max(tenDegreePtsX), max(tenDegreePtsY))
+    ax3.set_xlim(-mx * 1.2, mx * 1.2)
+    ax3.set_ylim(-mx * 1.2, mx * 1.2)
 
-
-    fig, ax = plt.subplots(figsize=(8, 6))
-    fig1, ax1 = plt.subplots(figsize=(8, 6))
+    fig2, ax2 = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(9, 6))
+    fig1, ax1 = plt.subplots(figsize=(9, 6))
+    ax1.set_title('Зависимость высоты м от пути м')
+    ax.set_title('Зависимость высоты м от времени с')
+    ax2.set_title('Зависимость скорости м/с от времени с')
     ax.plot(sol.t, (sol.y[0] - Re))
-    ax1.plot(sol.y[3], (sol.y[0] - Re))#
+    ax1.plot(sol.y[3], (sol.y[0] - Re))  #
     ax.minorticks_on()
     ax1.minorticks_on()
+    ax2.minorticks_on()
     ax.grid(which='major', color='k', linewidth=0.5)
     ax1.grid(which='major', color='k', linewidth=0.5)
     ax.grid(which='minor', color='k', linestyle=':')
     ax1.grid(which='minor', color='k', linestyle=':')
+    ax2.grid(which='major', color='k', linewidth=0.5)
+    ax2.grid(which='minor', color='k', linestyle=':')
     ax.set_xlabel("t, c", fontsize=14)
     ax.set_ylabel("h, м", fontsize=14)
+    ax2.set_xlabel("t, c", fontsize=14)
+    ax2.set_ylabel("v, м/с", fontsize=14)
     ax1.set_xlabel("l, м", fontsize=14)
     ax1.set_ylabel("h, м", fontsize=14)
-    ax1.set_title('Зависимость высоты м от пути м')
-    ax.set_title('Зависимость высоты м от времени с')
-    fig2, ax2 = plt.subplots(figsize=(8, 6))
+
     ax2.plot(sol.t, sol.y[1])
     plt.show()
 
