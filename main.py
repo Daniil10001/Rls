@@ -1,4 +1,5 @@
-﻿global tx, bx
+﻿import os
+global tx, bx
 from collections import namedtuple
 from math import *
 from tkinter import *
@@ -10,13 +11,54 @@ import numpy as np
 from scipy import integrate
 
 root = Tk()
-root.title("GUI на Python")
+root.title("Рельсотрон Python")
 s = ['Сила тока A', 'Ширина проводника м', 'Масса кг', 'Магнитное поле Тс',
      "Количество проводников", "Арэдиномический коэффицент",
      "Площадь миделя м*м",
      "Угол", "Длина ствола м", 'Время с']
 root.rowconfigure(list(range(len(s))), minsize=0, weight=1)
 root.columnconfigure([0, 1, 2], minsize=0, weight=1)
+
+
+def opeen():
+    import easygui
+    s = easygui.fileopenbox()
+    print(s, os.path.normpath(s))
+    try:
+        txt = open(os.path.normpath(s), 'r').read()
+    except:
+        easygui.msgbox('Файл нельзя открыть', 'Error')
+        return 0
+    a = []
+    a = txt.split(';')
+    print(a, len(bx))
+    if len(a) == len(bx):
+        for i in range(len(bx)):
+            bx[i].delete(0, 'end')
+            bx[i].insert(0, a[i])
+    else:
+        easygui.msgbox('Неправильный файл', 'Alert')
+
+
+def writee():
+    from tkinter import filedialog as fd
+    a = []
+    for i in range(len(bx)):
+        a.append(bx[i].get())
+    try:
+        f = fd.asksaveasfile(mode='w', defaultextension=".txt", filetypes=(("TXT files", "*.txt"),)).write(';'.join(a))
+    except:
+        pass
+
+
+mainmenu = Menu(root)
+root.config(menu=mainmenu)
+
+filemenu = Menu(mainmenu, tearoff=0)
+filemenu.add_command(label="Открыть", command=opeen)
+filemenu.add_command(label="Сохранить", command=writee)
+mainmenu.add_cascade(label="Файл",
+                     menu=filemenu)
 
 
 # @numba.jit(nopython=False)
